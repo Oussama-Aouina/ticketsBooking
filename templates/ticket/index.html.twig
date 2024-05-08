@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ticket index{% endblock %}
+
+{% block body %}
+    <h1>Ticket index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prix</th>
+                <th>Emplacement</th>
+                <th>Choisi</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.prix }}</td>
+                <td>{{ ticket.emplacement }}</td>
+                <td>{{ ticket.choisi ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_ticket_show', {'id': ticket.id}) }}">show</a>
+                    {% if 'ROLE_ADMIN' in app.user.roles  %}<a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">edit</a>{% endif %}
+                </td>
+            <td>
+                {% if 'ROLE_SPECTATEUR' in app.user.roles  %}
+                {% if ticket.choisi %}
+                <button class="bg-muted text-white rounded button " disabled>
+                    choisir
+                </button>
+                {% else %}
+                    <a class="bg-primary text-white rounded button p-2" href={{ path('choose_ticket', {'id': ticket.id}) }}>choisir</a>
+                {% endif %}
+                {% endif %}
+            </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if 'ROLE_ADMIN' in app.user.roles  %}<a href="{{ path('app_ticket_new') }}">Create new</a>{% endif %}
+{% endblock %}

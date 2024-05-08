@@ -1,0 +1,22 @@
+
+
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
+{% endblock %}
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <h1>Welcome to Your Website</h1>
+                <p>This is your homepage content.</p>
+                <div class="mt-4">
+                    <a href="{{ path('app_login') }}" class="btn btn-primary me-3">Sign In</a>
+                    <a href="{{ path('app_register') }}" class="btn btn-success">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
